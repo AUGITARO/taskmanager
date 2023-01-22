@@ -6,9 +6,15 @@
                     <a href="./logout.php">exit</a>
                     <ul class="project-list">
 
+                        <?php $tab = isset($_GET['tab']) ? "&tab={$_GET['tab']}" : ''; ?>
+
                         <?php foreach ($projects ?? [] as $project): ?>
-                            <li class="project">
-                                <a class="project-name" href="#"><?= esc($project['name']) ?></a>
+                            <?php $classname = isset($_GET['project']) && $_GET['project'] === $project['id'] ? ' project--active' : ''; ?>
+                            <li class="project<?= $classname ?>">
+                                <a
+                                    class="project-name"
+                                    href="/index.php?project=<?= esc($project['id']) . $tab ?>"
+                                ><?= esc($project['name']) ?></a>
                             </li>
                         <?php endforeach; ?>
 
@@ -25,35 +31,29 @@
                     </div>
 
                     <div class="buttons">
+                        <?php $project = isset($_GET['project']) ? "project={$_GET['project']}&" : ''; ?>
 
-                        <label for="f-option" class="filter-button">
-                          <input type="radio" id="f-option" name="selector" checked>
-                          <span>Все</span>
-                        </label>
+                        <?php $classname = isset($_GET['tab']) && $_GET['tab'] === "all" ? ' filter-btn--active' : ''; ?>
+                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=all">Все</a>
 
-                        <label for="s-option" class="filter-button">
-                          <input type="radio" id="s-option" name="selector">
-                          <span>Повестка дня</span>
-                        </label>
+                        <?php $classname = isset($_GET['tab']) && $_GET['tab'] === "today" ? ' filter-btn--active' : ''; ?>
+                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=today">Повестка дня</a>
 
-                        <label for="t-option" class="filter-button">
-                          <input type="radio" id="t-option" name="selector">
-                          <span>Завтра</span>
-                        </label>
+                        <?php $classname = isset($_GET['tab']) && $_GET['tab'] === "tomorrow" ? ' filter-btn--active' : ''; ?>
+                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=tomorrow">Завтра</a>
 
-                        <label for="v-option" class="filter-button">
-                            <input type="radio" id="v-option" name="selector">
-                            <span>Просроченные</span>
-                        </label>
-                        
-                        <input type="checkbox" class="checkbox-input" id="checkbox">
-                        <label for="checkbox">
-                            <span class="checkbox"></span>
-                        </label>
-                        <label for="checkbox">
-                            <span class="checkbox-text">Показать выполненые</span>
-                        </label>
+                        <?php $classname = isset($_GET['tab']) && $_GET['tab'] === "overdue" ? ' filter-btn--active' : ''; ?>
+                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=overdue">Просроченные</a>
 
+                        <div>
+                            <input type="checkbox" class="checkbox-input" id="checkbox">
+                            <label for="checkbox">
+                                <span class="checkbox"></span>
+                            </label>
+                            <label for="checkbox">
+                                <span class="checkbox-text">Показать выполненые</span>
+                            </label>
+                        </div>
                       </div>
                 </div>
 
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                     <?php endforeach; ?>
-
+                    <a target="_blank" class="new-project" href="create-task.php">+</a>
                 </div>
             </div>
 

@@ -16,11 +16,15 @@ function get_user_projects(mysqli $mysqli, int $user_id): array
     return $projects;
 }
 
-function get_user_tasks(mysqli $mysqli, int $user_id): array
+function get_user_tasks(mysqli $mysqli, int $user_id, ?int $project_id = null): array
 {
     $sql = "SELECT * FROM `task` WHERE `user_id` = {$user_id}";
-    $result = mysqli_query($mysqli, $sql);
 
+    if (isset($project_id)) {
+        $sql .= " AND `project_id` = $project_id";
+    }
+
+    $result = mysqli_query($mysqli, $sql);
     $tasks = [];
 
     while ($task = mysqli_fetch_assoc($result)) {
@@ -70,7 +74,7 @@ function is_email_exist(mysqli $mysqli, string $email): bool
     return boolval(mysqli_fetch_assoc($result));
 }
 
-function is_project_exist(mysqli $mysqli, int $user_id, string $project): bool
+function is_project_exist_by_name(mysqli $mysqli, int $user_id, string $project): bool
 {
     $project = mysqli_real_escape_string($mysqli, $project);
     $sql = "SELECT * FROM `project` WHERE `user_id` = $user_id AND `name` = '$project'";
@@ -79,10 +83,27 @@ function is_project_exist(mysqli $mysqli, int $user_id, string $project): bool
     return boolval(mysqli_fetch_assoc($result));
 }
 
+function is_project_exist_by_id(mysqli $mysqli, int $user_id, int $project_id): bool
+{
+    $sql = "SELECT * FROM `project` WHERE `user_id` = $user_id AND `id` = $project_id";
+    $result = mysqli_query($mysqli, $sql);
+
+    return boolval(mysqli_fetch_assoc($result));
+}
+
 function create_project(mysqli $mysqli, int $user_id, string $project): bool
 {
     $project = mysqli_real_escape_string($mysqli, $project);
-    $sql = "INSERT INTO project (name, user_id) VALUES ('$project', $user_id)";
+    $sql = "INSERT INTO `project` (`name`, `user_id`) VALUES ('$project', $user_id)";
+
+    return mysqli_query($mysqli, $sql);
+}
+
+function create_task(mysqli $mysqli, int $user_id, int $project_id, string $task_name, string $deadline): bool
+{
+    $task_name = mysqli_real_escape_string($mysqli, $task_name);
+    $deadline = mysqli_real_escape_string($mysqli, $deadline);
+    $sql = "INSERT INTO `task` (`name`, `user_id`, `project_id`, `deadline`) VALUES ('$task_name', $user_id, $project_id, '$deadline')";
 
     return mysqli_query($mysqli, $sql);
 }

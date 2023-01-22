@@ -30,7 +30,8 @@ function get_post_input(string $form_name) : array
     $forms = [
         'signup' => ['username', 'email', 'password'],
         'login' => ['email', 'password'],
-        'create-project' => ['project'] 
+        'create-project' => ['project'],
+        'create-task' => ['name', 'deadline', 'project_id']
     ];
 
     if (!isset($forms[$form_name])) {

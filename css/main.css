@@ -61,6 +61,10 @@ main .container {
     background-color: #3b3640;
 }
 
+.project--active {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+} 
+
 .project-name { /* Имя проеекта и переход на него */
     display: block;
     line-height:
@@ -127,7 +131,7 @@ main .container {
   .filter-button:hover, .filter-button:focus-within {
     background: rgba(159, 159, 159, 0.1);
   }
-  .filter-button input {
+  .filter-button {
     background-color: #3b3640;
     vertical-align: middle;
     width: 20px;
@@ -146,7 +150,7 @@ main .container {
   .filter-button input:focus {
     outline: none;
   }
-  .filter-button input:checked {
+  .filter-button--checked {
     box-shadow: inset 0 0 0 6px #ffd866;
   }
   .filter-button span {
@@ -156,6 +160,31 @@ main .container {
     padding: 0 8px;
   }
 
+  .buttons {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .buttons > div {
+    display: flex;
+    align-items: center;
+  }
+
+  .buttons, .buttons * {
+    border: 1px solid #000;
+  }
+
+  .filter-btn {
+    color: #000;
+    text-decoration: none;
+  }
+
+  .filter-btn--active {
+    color: #ffd866;
+    text-decoration: underline;
+  }
 
 /* ========= Чекбокс ========= */
 

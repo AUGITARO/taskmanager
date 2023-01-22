@@ -15,7 +15,7 @@
                     value="<?= $_POST['email'] ?? '' ?>"
                     placeholder="email"
                     style="<?= $style ?>"
-                />
+                >
 
                 <?php if (isset($errors['email'])): ?>
                     <p style="background-color: red;"><?= $errors['email'] ?></p>
@@ -39,5 +39,6 @@
             </fieldset>
             <button type="submit" class="btn">log in</button>
         </form>
+        <a style="color: #fff; text-align: center; display: block;" href="signup.php">signup</a>
     </div>
 </div>

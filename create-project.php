@@ -16,14 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (mb_strlen($input['project']) === 0) {
         $errors['project'] = 'Введите название проекта!';
-    } elseif (is_project_exist($mysqli, $user_id, $input['project'])) {
+    } elseif (is_project_exist_by_name($mysqli, $user_id, $input['project'])) {
         $errors['project'] = 'Проект с таким названием уже существует!';
-    } elseif (empty($errors)) {
+    }
+
+    if (empty($errors)) {
         if (create_project($mysqli, $user_id, $input['project'])) {
             header('Location: /index.php');
         }
     }
-
 }
 
 $page_content = includeTemplate('create-project.php', [

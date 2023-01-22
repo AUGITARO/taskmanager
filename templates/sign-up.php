@@ -46,5 +46,6 @@
         </fieldset>
         <button type="submit" class="btn">sign up</button>
         </form>
+        <a style="color: #fff; text-align: center; display: block;" href="login.php">login</a>
     </div>
     </div>

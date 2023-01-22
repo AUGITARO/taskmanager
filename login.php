@@ -9,6 +9,8 @@ if (isset($_SESSION['user'])) {
 
 $errors = [];
 
+const PASSWD_VALIDATION_ERROR = 'Введена неправильная почта или пароль';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = get_post_input('login');
 
@@ -29,10 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user'] = $user;
                 header('Location: /index.php');
             } else {
-                $errors['password'] = 'Введена неправильная почта или пароль';
+                $errors['password'] = PASSWD_VALIDATION_ERROR;
             }
         } else {
-            $errors['password'] = 'Введена неправильная почта или пароль';
+            $errors['password'] = PASSWD_VALIDATION_ERROR;
         }
     }
 }
