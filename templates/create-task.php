@@ -5,7 +5,7 @@
 ?>
 <div class="signup">
     <div class="signup-classic">
-        <form class="form" method="post" action="create-task.php">
+        <form class="form" method="post" action="create-task.php" enctype="multipart/form-data">
             <h1>Create Task</h1>
             <fieldset class="email">
                 <?php $field = 'name'; ?>
@@ -31,7 +31,7 @@
                 <input
                     type="text"
                     name="<?= $field ?>"
-                    placeholder="2001-11-26"
+                    placeholder="ГГГГ-ММ-ДД"
                     value="<?= $_POST[$field] ?? '' ?>"
                     style="<?= $style ?>"
                 >
@@ -56,6 +56,7 @@
                 <?php endif; ?>
 
             </fieldset>
+            <input type="file" name="task-file">
             <button type="submit" class="btn">Create!</button>
         </form>
     </div>

@@ -20,7 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (mb_strlen($input['deadline']) === 0) {
         $errors['deadline'] = 'Введите срок выполнения задачи!';
+    } elseif (!is_date_valid($input['deadline'])) {
+        $errors['deadline'] = 'Некорректный формат даты!';
     }
+
 
     if (!is_project_exist_by_id($mysqli, $user_id, intval($input['project_id']))) {
         $errors['project_id'] = 'Проект не существует!';
@@ -28,6 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         create_task($mysqli, $user_id, $input['project_id'], $input['name'], $input['deadline']);
+
+        if (isset($_FILES['task-file']['tmp_name'])) {
+            $file_path = __DIR__ . '/uploads/' . $_FILES['task-file']['name'];
+            move_uploaded_file($_FILES['task-file']['tmp_name'], $file_path);
+        }
+
         header('Location: /index.php');
         exit;
     }

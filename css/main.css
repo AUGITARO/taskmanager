@@ -310,3 +310,8 @@ main .container {
     color: #ffd866;
     font-size: 24px;
 }
+
+.task--important .deadline{
+  color: red !important;
+  text-decoration: underline;
+}

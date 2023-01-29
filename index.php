@@ -9,9 +9,10 @@ if (!isset($_SESSION['user'])) {
 
 $user_id = intval($_SESSION['user']['id']);
 $project_id = $_GET['project'] ?? null;
+$tab = $_GET['tab'] ?? null;
 
 $projects = get_user_projects($mysqli, $user_id); //db-functions.php
-$tasks = get_user_tasks($mysqli, $user_id, $project_id);
+$tasks = get_user_tasks($mysqli, $user_id, $project_id, $tab);
 
 $page_content = includeTemplate('main.php', [
     'projects' => $projects,

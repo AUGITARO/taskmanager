@@ -59,7 +59,8 @@
 
                 <div class="tasks-list">
                     <?php foreach ($tasks ?? [] as $task): ?>
-                        <div class="task">
+                        <?php $classname = strpos($task['deadline'], date('Y-m-d')) === 0 ? ' task--important' : '';?>
+                        <div class="task<?= $classname ?>">
                             <div class="left-task-wrapper">
                                 <div class="status"></div>
                             </div>
@@ -76,7 +77,7 @@
                                             </g>
                                         </svg>
                                     </a>
-                                    <p><?= $task['dt_create'] ?></p>
+                                    <p class="deadline"><?= date('Y-m-d', strtotime($task['deadline'])) ?></p>
                                 </div>
                             </div>
                         </div>

@@ -16,12 +16,22 @@ function get_user_projects(mysqli $mysqli, int $user_id): array
     return $projects;
 }
 
-function get_user_tasks(mysqli $mysqli, int $user_id, ?int $project_id = null): array
+function get_user_tasks(mysqli $mysqli, int $user_id, ?int $project_id = null, ?string $tab = null): array
 {
     $sql = "SELECT * FROM `task` WHERE `user_id` = {$user_id}";
 
     if (isset($project_id)) {
         $sql .= " AND `project_id` = $project_id";
+    }
+
+    if (isset($tab)) {
+        if ($tab === 'today') {
+            $sql .= ' AND `deadline` = CURDATE()';
+        } elseif ($tab === 'tomorrow') {
+            $sql .= ' AND `deadline` = CURDATE() + INTERVAL 1 DAY';
+        } elseif ($tab === 'overdue') {
+            $sql .= ' AND `deadline` < CURDATE()';
+        }
     }
 
     $result = mysqli_query($mysqli, $sql);
