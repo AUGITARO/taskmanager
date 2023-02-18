@@ -18,7 +18,7 @@ function get_user_projects(mysqli $mysqli, int $user_id): array
 
 function get_user_tasks(mysqli $mysqli, int $user_id, ?int $project_id = null, ?string $tab = null): array
 {
-    $sql = "SELECT * FROM `task` WHERE `user_id` = {$user_id}";
+    $sql = "SELECT t.*, tf.path AS file_path FROM task t LEFT JOIN task_file tf ON tf.task_id = t.id WHERE t.user_id = {$user_id}";
 
     if (isset($project_id)) {
         $sql .= " AND `project_id` = $project_id";
@@ -109,11 +109,44 @@ function create_project(mysqli $mysqli, int $user_id, string $project): bool
     return mysqli_query($mysqli, $sql);
 }
 
-function create_task(mysqli $mysqli, int $user_id, int $project_id, string $task_name, string $deadline): bool
+function create_task(mysqli $mysqli, int $user_id, int $project_id, string $task_name, string $deadline): int|false
 {
     $task_name = mysqli_real_escape_string($mysqli, $task_name);
     $deadline = mysqli_real_escape_string($mysqli, $deadline);
     $sql = "INSERT INTO `task` (`name`, `user_id`, `project_id`, `deadline`) VALUES ('$task_name', $user_id, $project_id, '$deadline')";
+
+    if (mysqli_query($mysqli, $sql)) {
+        return mysqli_insert_id($mysqli);
+    }
+
+    return false;
+}
+
+function create_file(mysqli $mysqli, string $file_path, int $task_id): bool
+{
+    $file_path = mysqli_real_escape_string($mysqli, $file_path);
+    $sql = "INSERT INTO `task_file` (`path`, `task_id`) VALUES ('$file_path', $task_id)";
+
+    return mysqli_query($mysqli, $sql);
+}
+
+function search_user_tasks(mysqli $mysqli, string $query, int $user_id): array
+{   
+    $query = mysqli_real_escape_string($mysqli, $query);
+    $sql = "SELECT * FROM `task` WHERE `name` LIKE '%{$query}%' AND `user_id` = {$user_id} ";
+    $result = mysqli_query($mysqli, $sql);
+    $tasks = [];
+
+    while ($task = mysqli_fetch_assoc($result)) {
+        $tasks[] = $task;
+    }
+
+    return $tasks;
+}
+
+function change_status(mysqli $mysqli, int $user_id, int $task_id): bool
+{
+    $sql = "UPDATE `task` SET `is_completed` = NOT `is_completed` WHERE `id` = $task_id AND `user_id` = $user_id";
 
     return mysqli_query($mysqli, $sql);
 }

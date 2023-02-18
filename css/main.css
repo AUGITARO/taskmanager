@@ -260,9 +260,13 @@ main .container {
 .status {
     width: 50px;
     height: 50px;
-    background-color: chartreuse;
+    background-color: crimson;
     /* border: 1px solid #ffd52d; */
     border-radius: 50%;
+}
+
+.status--complete {
+    background-color: green;
 }
 
 .right-task-wrapper {

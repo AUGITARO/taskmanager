@@ -57,6 +57,11 @@
 
             </fieldset>
             <input type="file" name="task-file">
+
+            <?php if (isset($errors['task_file'])): ?>
+                <p style="background-color: red;"><?= $errors['task_file'] ?></p>
+            <?php endif; ?>
+            
             <button type="submit" class="btn">Create!</button>
         </form>
     </div>

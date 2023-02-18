@@ -27,7 +27,10 @@
                 <div class="filters">
 
                     <div class="search">
-                        <input class="search-task" type="search" placeholder="Найти задачу">
+                        <form action="search.php" method="get" style="display: flex;">
+                            <input autofocus value="<?= $_GET['q'] ?? ''?>"class="search-task" type="search" name="q" placeholder="Найти задачу">
+                            <input type="submit">
+                        </form>
                     </div>
 
                     <div class="buttons">
@@ -46,7 +49,8 @@
                         <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=overdue">Просроченные</a>
 
                         <div>
-                            <input type="checkbox" class="checkbox-input" id="checkbox">
+                            <?php $is_checked = isset($_GET['show-completed']) && $_GET['show-completed'] === '1' ? ' checked' : '';  ?>
+                            <input type="checkbox" class="checkbox-input" name="show-completed" id="checkbox"<?= $is_checked ?>>
                             <label for="checkbox">
                                 <span class="checkbox"></span>
                             </label>
@@ -58,30 +62,40 @@
                 </div>
 
                 <div class="tasks-list">
+                    
                     <?php foreach ($tasks ?? [] as $task): ?>
                         <?php $classname = strpos($task['deadline'], date('Y-m-d')) === 0 ? ' task--important' : '';?>
                         <div class="task<?= $classname ?>">
                             <div class="left-task-wrapper">
-                                <div class="status"></div>
+                                <a href="execute-task.php?id=<?= $task['id'] ?>">
+                                    <?php $classname = intval($task['is_completed']) === 1 ? ' status--complete' : ''?>
+                                    <div class="status<?= $classname ?>"></div>
+                                </a>
                             </div>
                             <div class="right-task-wrapper">
                                 <div class="task-name">
                                     <p><?= $task['name'] ?></p>
                                 </div>
                                 <div class="task-data-file">
-                                    <a href="#">
-                                        <svg class="download" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-                                            <g id="Icons">
-                                                <path d="m43 32v6a5 5 0 0 1 -5 5h-26a5 5 0 0 1 -5-5v-6h-2v6a7 7 0 0 0 7 7h26a7 7 0 0 0 7-7v-6z"></path>
-                                                <path d="m25 39a1 1 0 0 0 .71-.29l12-12-1.42-1.42-10.29 10.3v-30.59h-2v30.59l-10.29-10.3-1.42 1.42 12 12a1 1 0 0 0 .71.29z"></path>
-                                            </g>
-                                        </svg>
-                                    </a>
+
+                                    <?php if (isset($task['file_path'])): ?>
+                                        <a href="/uploads/<?= $task['file_path'] ?>" download>
+                                            <svg class="download" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                                                <g id="Icons">
+                                                    <path d="m43 32v6a5 5 0 0 1 -5 5h-26a5 5 0 0 1 -5-5v-6h-2v6a7 7 0 0 0 7 7h26a7 7 0 0 0 7-7v-6z"></path>
+                                                    <path d="m25 39a1 1 0 0 0 .71-.29l12-12-1.42-1.42-10.29 10.3v-30.59h-2v30.59l-10.29-10.3-1.42 1.42 12 12a1 1 0 0 0 .71.29z"></path>
+                                                </g>
+                                            </svg>
+                                            <p><?= $task['file_path'] ?></p>
+                                        </a>
+                                    <?php endif;?>
+                                    
                                     <p class="deadline"><?= date('Y-m-d', strtotime($task['deadline'])) ?></p>
                                 </div>
                             </div>
                         </div>
                     <?php endforeach; ?>
+
                     <a target="_blank" class="new-project" href="create-task.php">+</a>
                 </div>
             </div>

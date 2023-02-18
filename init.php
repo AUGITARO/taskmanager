@@ -11,7 +11,7 @@ require_once('helpers.php');
 
 /* Установка соединения с MySQL */
 $config = require_once('config/db.php');
-$mysqli = mysqli_connect(...$config);
+$mysqli = mysqli_connect(...$config); 
 
 if (!$mysqli) {
     http_response_code(500);
