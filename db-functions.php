@@ -16,7 +16,7 @@ function get_user_projects(mysqli $mysqli, int $user_id): array
     return $projects;
 }
 
-function get_user_tasks(mysqli $mysqli, int $user_id, ?int $project_id = null, ?string $tab = null): array
+function get_user_tasks(mysqli $mysqli, int $user_id, ?int $project_id = null, ?string $tab = null, bool $show_completed = false): array
 {
     $sql = "SELECT t.*, tf.path AS file_path FROM task t LEFT JOIN task_file tf ON tf.task_id = t.id WHERE t.user_id = {$user_id}";
 
@@ -34,6 +34,10 @@ function get_user_tasks(mysqli $mysqli, int $user_id, ?int $project_id = null, ?
         }
     }
 
+    if (!$show_completed) {
+        $sql .= " AND `is_completed` = 0";
+    }
+    
     $result = mysqli_query($mysqli, $sql);
     $tasks = [];
 

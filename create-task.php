@@ -12,11 +12,8 @@ $user_id = intval($_SESSION['user']['id']);
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = get_post_input('create-task');
-
-    if (mb_strlen($input['name']) === 0) {
-        $errors['name'] = 'Введите название задачи!';
-    }
+    $input = get_post_input('create-task');=
+    $errors['name'] = required($input['name']);
 
     if (mb_strlen($input['deadline']) === 0) {
         $errors['deadline'] = 'Введите срок выполнения задачи!';
@@ -28,14 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['project_id'] = 'Проект не существует!';
     }
 
-    if (empty($errors)) {
+    if (empty(array_filter($errors))) {
         $task_id = create_task($mysqli, $user_id, $input['project_id'], $input['name'], $input['deadline']);
+        
+        if (isset($_FILES['task-file']['tmp_name']) && mb_strlen($_FILES['task-file']['tmp_name']) > 0) {
+            $task_file_name = uniqid() . "_" . $_FILES['task-file']['name'];
 
-        if (isset($_FILES['task-file']['tmp_name'])) {
-            $file_path = __DIR__ . '/uploads/' . $_FILES['task-file']['name'];
+            $file_path = __DIR__ . '/uploads/' . $task_file_name;
             move_uploaded_file($_FILES['task-file']['tmp_name'], $file_path);
 
-            if (!create_file($mysqli, $_FILES['task-file']['name'], $task_id)) {
+            if (!create_file($mysqli, $task_file_name, $task_id)) {
                 $errors['task_file'] = 'Ошибка при загрузке файла!';
             }
         }

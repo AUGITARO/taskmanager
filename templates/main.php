@@ -13,7 +13,7 @@
                             <li class="project<?= $classname ?>">
                                 <a
                                     class="project-name"
-                                    href="/index.php?project=<?= esc($project['id']) . $tab ?>"
+                                    href="/index.php?project=<?= esc($project['id']) . $tab . $show_completed ?>"
                                 ><?= esc($project['name']) ?></a>
                             </li>
                         <?php endforeach; ?>
@@ -35,23 +35,24 @@
 
                     <div class="buttons">
                         <?php $project = isset($_GET['project']) ? "project={$_GET['project']}&" : ''; ?>
+                        <?php $show_completed = isset($_GET['show-completed']) ? "&show-completed={$_GET['show-completed']}" : ''; ?>
 
                         <?php $classname = isset($_GET['tab']) && $_GET['tab'] === "all" ? ' filter-btn--active' : ''; ?>
-                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=all">Все</a>
+                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=all<?= $show_completed ?>">Все</a>
 
                         <?php $classname = isset($_GET['tab']) && $_GET['tab'] === "today" ? ' filter-btn--active' : ''; ?>
-                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=today">Повестка дня</a>
+                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=today<?= $show_completed ?>">Повестка дня</a>
 
                         <?php $classname = isset($_GET['tab']) && $_GET['tab'] === "tomorrow" ? ' filter-btn--active' : ''; ?>
-                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=tomorrow">Завтра</a>
+                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=tomorrow<?= $show_completed ?>">Завтра</a>
 
                         <?php $classname = isset($_GET['tab']) && $_GET['tab'] === "overdue" ? ' filter-btn--active' : ''; ?>
-                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=overdue">Просроченные</a>
+                        <a class="filter-btn<?= $classname ?>" href="/index.php?<?= $project ?>tab=overdue<?= $show_completed ?>">Просроченные</a>
 
                         <div>
                             <?php $is_checked = isset($_GET['show-completed']) && $_GET['show-completed'] === '1' ? ' checked' : '';  ?>
                             <input type="checkbox" class="checkbox-input" name="show-completed" id="checkbox"<?= $is_checked ?>>
-                            <label for="checkbox">
+                            <label for="checkbox">show_completed
                                 <span class="checkbox"></span>
                             </label>
                             <label for="checkbox">
@@ -86,7 +87,7 @@
                                                     <path d="m25 39a1 1 0 0 0 .71-.29l12-12-1.42-1.42-10.29 10.3v-30.59h-2v30.59l-10.29-10.3-1.42 1.42 12 12a1 1 0 0 0 .71.29z"></path>
                                                 </g>
                                             </svg>
-                                            <p><?= $task['file_path'] ?></p>
+                                            <p style="width: 200px; text-overflow: ellipsis; overflow: hidden;"><?= $task['file_path'] ?></p>
                                         </a>
                                     <?php endif;?>
                                     
