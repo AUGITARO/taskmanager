@@ -1,7 +1,7 @@
 <?php
 
-session_start();
+require_once './init.php';
+require_once './authorization/user.php';
 
 $_SESSION = [];
-
-header('Location: /');
+header('Location: /index.php');

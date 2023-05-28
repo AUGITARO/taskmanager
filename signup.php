@@ -1,11 +1,9 @@
 <?php
 
-require_once('init.php');
+require_once './init.php';
+require_once './authorization/guest.php';
 
-if (isset($_SESSION['user'])) {
-    header('Location: /index.php');
-    exit;
-}
+/** @var mysqli $mysqli */
 
 $errors = [];
 
@@ -35,14 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$page_content = includeTemplate('sign-up.php', [
+$page_content = includeTemplate('signup.php', [
     'errors' => $errors
 ]);
 
 $layout_content = includeTemplate('layouts/main.php', [
     'title' => 'Sign up',
     'page_content' => $page_content,
-    'css_href' => './css/Signup.css'
+    'css_href' => './assets/css/signup.css',
 ]);
 
 print($layout_content);

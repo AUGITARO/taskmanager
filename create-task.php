@@ -1,18 +1,15 @@
 <?php
 
-require_once 'init.php';
+require_once './init.php';
+require_once './authorization/user.php';
 
-if (!isset($_SESSION['user'])) {
-    header('Location: /login.php');
-    exit;
-}
-
-$user_id = intval($_SESSION['user']['id']);
+/** @var mysqli $mysqli */
+/** @var int $user_id */
 
 $errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $input = get_post_input('create-task');=
+    $input = get_post_input('create-task');
     $errors['name'] = required($input['name']);
 
     if (mb_strlen($input['deadline']) === 0) {

@@ -1,11 +1,10 @@
-<?php 
+<?php
 
-require_once('init.php');
+require_once './init.php';
+require_once './authorization/user.php';
 
-if (!isset($_SESSION['user'])) {
-    header('Location: /login.php');
-    exit;
-}
+/** @var mysqli $mysqli */
+/** @var int $user_id */
 
 $query = $_GET['q'] ?? null;
 

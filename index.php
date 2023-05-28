@@ -1,13 +1,11 @@
 <?php
 
-require_once('init.php');
+require_once './init.php';
+require_once './authorization/user.php';
 
-if (!isset($_SESSION['user'])) {
-    header('Location: /login.php');
-    exit;
-}
+/** @var mysqli $mysqli */
+/** @var int $user_id */
 
-$user_id = intval($_SESSION['user']['id']);
 $project_id = $_GET['project'] ?? null;
 $tab = $_GET['tab'] ?? null;
 $show_completed = $_GET['show-completed'] ?? false;
@@ -23,7 +21,7 @@ $page_content = includeTemplate('main.php', [
 $layout_content = includeTemplate('layouts/main.php', [
     'title' => 'Main',
     'page_content' => $page_content,
-    'css_href' => './css/main.css'
+    'css_href' => './assets/css/main.css'
 ]);
 
 print($layout_content);

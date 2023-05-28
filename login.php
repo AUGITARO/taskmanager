@@ -1,11 +1,9 @@
 <?php
 
-require_once('init.php');
+require_once './init.php';
+require_once './authorization/guest.php';
 
-if (isset($_SESSION['user'])) {
-    header('Location: /index.php');
-    exit;
-}
+/** @var mysqli $mysqli */
 
 $errors = [];
 
@@ -26,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         if ($user = get_user_by_email($mysqli, $input['email'])) {
-
             if (password_verify($input['password'], $user['password_hash'])) {
                 $_SESSION['user'] = $user;
                 header('Location: /index.php');
@@ -39,14 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$page_content = includeTemplate('log-in.php', [
+$page_content = includeTemplate('login.php', [
     'errors' => $errors
 ]);
 
 $layout_content = includeTemplate('layouts/main.php', [
     'title' => 'Log in',
     'page_content' => $page_content,
-    'css_href' => './css/Login.css'
+    'css_href' => './assets/css/login.css'
 ]);
 
 print($layout_content);

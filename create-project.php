@@ -1,13 +1,10 @@
 <?php
 
-require_once('init.php');
+require_once './init.php';
+require_once './authorization/user.php';
 
-if (!isset($_SESSION['user'])) {
-    header('Location: /index.php');
-    exit;
-}
-
-$user_id = intval($_SESSION['user']['id']);
+/** @var mysqli $mysqli */
+/** @var int $user_id */
 
 $errors = [];
 
