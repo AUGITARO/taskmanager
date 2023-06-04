@@ -40,6 +40,6 @@
             <button type="submit" class="btn">log in</button>
         </form>
         <!-- TODO: перенести стилизацию в css -->
-        <a style="color: #fff; text-align: center; display: block;" href="signup.php">Нет аккаунта? - вам сюда!</a>
+        <a class="register-link" href="signup.php">Нет аккаунта? - вам сюда!</a>
     </div>
 </div>

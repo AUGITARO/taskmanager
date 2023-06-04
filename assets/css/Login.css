@@ -130,3 +130,9 @@ h1 {
 .signup-classic fieldset.password::after {
     content: "";
 }
+
+.register-link {
+    color: #fff;
+    text-align: center;
+    display: block;
+}
