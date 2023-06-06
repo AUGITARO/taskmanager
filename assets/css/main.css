@@ -4,18 +4,35 @@
     --project-padding: 10px; /* внутренние отступы в слоте проекта */
 }
 
-@import url("https://fonts.googleapis.com/css?family=Quicksand:400,700&display=swap");
+@font-face {
+    font-family: 'FuturaBookC';
+    src:
+        url('../fonts/futura-book-c/futurabookc.woff2') format('woff2'),
+        url('../fonts/futura-book-c/futurabookc.woff') format('woff'),
+        url('../fonts/futura-book-c/futurabookc.ttf') format('truetype'),
+        url('../fonts/futura-book-c/futurabookc.svg#futurabookc') format('svg');
+}
+
+@font-face {
+    font-family: 'FuturaDemiC';
+    src:
+        url('../fonts/futura-demi-c/futurademic.woff2') format('woff2'),
+        url('../fonts/futura-demi-c/futurademic.woff') format('woff'),
+        url('../fonts/futura-demi-c/futurademic.ttf') format('truetype'),
+        url('../fonts/futura-demi-c/futurademic.svg#futurademic') format('svg');
+}
 
 * {
-    font-family: Open Sans;
     box-sizing: border-box;
 }
 
 body {
+    font-family: 'FuturaBookC';
     margin: 0;
     background-color: #696969;
 }
-/* ======================== Центровщик ============================= */
+
+/* ======== Центровщик ======== */
 .container {
     width: 1200px;
     padding: 0 15px;
@@ -27,11 +44,11 @@ main .container {
     display: flex;
 }
 
-/* ======================== Проекты ============================= */
+/* ======== Проекты ======== */
 
 
 
-.left-wrapper { /* Вся секция проектов */
+.left-wrapper {
     width: calc(1170px / 3);
     height: 100vh;
     display: flex;
@@ -44,28 +61,35 @@ main .container {
     color: #ffd866;
 }
 
-.project-list { /* Обертка проектов (слотов) */
+/* Обертка проектов (слотов) */
+.project-list {
     margin: 0;
+    margin-top: 35px;
     padding: 0;
     list-style: none;
 }
 
-.project { /* Весь слот контур,оболочка проекта */
+/* Весь слот контур,оболочка проекта */
+.project {
     padding: var(--project-padding);
     height: var(--project-height);
     width: 300px;
     border: var(--project-border-width) solid;
     text-align: center;
-    margin: 10px 0;
     border-radius: 10px;
     background-color: #3b3640;
 }
 
+.project:not(:first-child) {
+    margin-top: 10px;
+}
+
 .project--active {
     background-color: rgba(0, 0, 0, 0.2) !important;
-} 
+}
 
-.project-name { /* Имя проеекта и переход на него */
+/* Имя проеекта и переход на него */
+.project-name {
     display: block;
     line-height:
         calc(
@@ -78,13 +102,17 @@ main .container {
     white-space: nowrap;
     color: #ffd866;
     text-decoration: none;
+    font-size: 20px;
 }
 
-.new-project { /* Кнопка добавления нового проекта */
+/* Кнопка добавления нового проекта */
+.new-project {
+    font-family: 'FuturaDemiC';
     display: flex;
-    margin-top: 40px;
+    margin-top: 35px;
     justify-content: center;
     align-items: center;
+    align-self: center;
     height: 50px;
     width: 200px;
     background-color: #ffd866;
@@ -93,14 +121,12 @@ main .container {
     text-decoration: none;
 }
 
-/* ======================== Фильтры ============================= */
+/* ======== Фильтры ======== */
 .right-wrapper {
-    margin-top: 20px;
+    margin-left: 40px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: 0 15px;
-    /* border: 2px solid blue; */
 }
 
 /* ======== Поиск задач ========= */
@@ -124,54 +150,11 @@ main .container {
     outline: none;
 }
 
-/* ========= Кнопки ========= */
-
-.filter-button {
-    padding: 6px;
-    border-radius: 50px;
-    display: inline-flex;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    margin: 8px 0;
-    -webkit-tap-highlight-color: transparent;
-}
-.filter-button:hover, .filter-button:focus-within {
-    background: rgba(159, 159, 159, 0.1);
-}
-.filter-button {
-    background-color: #3b3640;
-    vertical-align: middle;
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    background: none;
-    border: 0;
-    box-shadow: inset 0 0 0 1px #9F9F9F;
-    box-shadow: inset 0 0 0 1.5px #9F9F9F;
-    appearance: none;
-    padding: 0;
-    margin: 0;
-    transition: box-shadow 150ms cubic-bezier(0.95, 0.15, 0.5, 1.25);
-    pointer-events: none;
-}
-.filter-button input:focus {
-    outline: none;
-}
-.filter-button--checked {
-    box-shadow: inset 0 0 0 6px #ffd866;
-}
-.filter-button span {
-    vertical-align: middle;
-    display: inline-block;
-    line-height: 20px;
-    padding: 0 8px;
-}
+/* ======== Кнопки Фильтры ======== */
 
 .buttons {
-    margin-top: 20px;
-    height: 50px;
+    margin-top: 35px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -180,80 +163,108 @@ main .container {
     align-items: center;
 }
 
-.buttons, .buttons * {
-    border: 1px solid #000;
+.filters {
+    margin-top: 50px;
 }
 
 .filter-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 216, 102, 0.5);
     color: #000;
     text-decoration: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    min-width: 50px;
+}
+
+.filter-btn:not(:first-child) {
+    margin-left: 25px;
 }
 
 .filter-btn--active {
-    color: #ffd866;
-    text-decoration: underline;
+    background-color: rgba(255, 216, 102, 1);
 }
 
-/* ========= Чекбокс ========= */
-
-.checkbox-input {}
-.checkbox-input:checked + .checkbox::after {
-    transform: translate(-50%, -50%) scale(1);
+.checkbox-input {
+    display: none;
 }
 
-.checkbox {
+.checkbox-input:checked + .checkbox-label .checkbox-icon::before {
+    background-color: #000;
+}
+
+.checkbox-input:checked + .checkbox-label {
+    background-color: rgba(255, 216, 102, 1)
+}
+
+.checkbox-label {
     position: relative;
+    display: flex;
+    align-items: center;
+    position: relative;
+    user-select: none;
+    padding: 5px 10px;
+    padding-left: 35px;
+    border-radius: 20px;
+    background-color: rgba(255, 216, 102, 0.5);
+    transition-duration: 200ms;
+}
+
+.checkbox-icon {
+    width: 16px;
+    height: 16px;
+    border: 1px solid;
+    position: absolute;
+    border-radius: 5px;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+}
+
+.checkbox-icon::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: transparent;
+    transform: translate(-50%, -50%);
+    transition-duration: 200ms;
     border-radius: 3px;
-    margin-left: 10px;
-}
-
-.checkbox-text {
-    position: relative;
-    top: -2px;
 }
 
 .checkbox-wrapper {
-    display: flex;
+    margin-left: auto;
 }
 
-
-/* ================== */
-
-
-
-/* ======================== Меню заданий ============================= */
+/* ======== Меню заданий ======== */
 .tasks-list {
-    padding: 15px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    height: 200px;
     flex-grow: 1;
-    /* border: 2px solid peru; */
+    margin-top: 35px;
 }
 
 .task {
     display: flex;
+    justify-content: space-between;
+    color: #fff;
+    align-items: center;
+    padding: 20px;
     border-radius: 10px;
-    width: 700px;
-    height: 200px;
-    /* border: 2px solid green; */
     background-color: #3b3640;
-    margin: 15px 0;
 }
 
-.left-task-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 200px;
-    /* border: 2px solid #000; */
+.task:not(:first-child) {
+    margin-top: 10px;
 }
 
 .status {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background-color: crimson;
     /* border: 1px solid #ffd52d; */
     border-radius: 50%;
@@ -263,50 +274,16 @@ main .container {
     background-color: green;
 }
 
-.right-task-wrapper {
-    width: 600px;
-    height: 200px;
-    /* border: 2px dashed blueviolet; */
-}
-
-.task-name {
-    height: 100px;
-    width: 600px;
-    /* border: 2px dashed firebrick; */
-}
-
-
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
 /* @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap'); */
-.task-name p {
+.task-name {
     font-family: 'Roboto Condensed', sans-serif;
-    /* font-family: 'Anton', sans-serif; */
+    /*font-family: 'Anton', sans-serif;*/
     font-weight: 700;
-    font-size: 33px;
+    font-size: 20px;
     margin: 0;
     color: #ffd866;
-    position: relative;
-    top: 15px;
-    left: 15px;
-}
-
-.task-data-file {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 100px;
-    width: 600px;
-    /* border: 2px dashed hotpink; */
-}
-
-.download {
-    height: 50px;
-    width: 50px;
-}
-
-.task-data-file p {
-    color: #ffd866;
-    font-size: 24px;
+    width: 200px;
 }
 
 .task--important .deadline{
@@ -315,5 +292,38 @@ main .container {
 }
 
 .logout-btn {
+    text-decoration: none;
     color: black;
+    background-color: #fff;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 5px 10px;
+    border-top: 1px solid;
+}
+
+.account-name {
+    font-family: 'FuturaDemiC';
+    font-weight: 700;
+    margin: 0;
+    margin-top: 35px;
+    color: black;
+    background-color: rgba(255, 216, 102, 1);
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 20px;
+}
+
+.task-file {
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+    color: #9F9F9F;
+}
+
+h1 {
+    margin: 0;
+    margin-top: 50px;
+    font-size: 40px;
 }

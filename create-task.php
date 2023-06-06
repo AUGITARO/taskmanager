@@ -53,7 +53,7 @@ $page_content = includeTemplate('create-task.php', [
 $layout_content = includeTemplate('layouts/main.php', [
     'title' => 'Create Task',
     'page_content' => $page_content,
-    'css_href' => './css/create-project.css'
+    'css_href' => './assets/css/create-project.css'
 ]);
 
 print($layout_content);

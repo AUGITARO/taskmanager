@@ -1,16 +1,30 @@
-@charset "UTF-8";
-*,
-*::before,
-*::after {
+@font-face {
+    font-family: 'FuturaBookC';
+    src:
+        url('../fonts/futura-book-c/futurabookc.woff2') format('woff2'),
+        url('../fonts/futura-book-c/futurabookc.woff') format('woff'),
+        url('../fonts/futura-book-c/futurabookc.ttf') format('truetype'),
+        url('../fonts/futura-book-c/futurabookc.svg#futurabookc') format('svg');
+}
+
+@font-face {
+    font-family: 'FuturaDemiC';
+    src:
+        url('../fonts/futura-demi-c/futurademic.woff2') format('woff2'),
+        url('../fonts/futura-demi-c/futurademic.woff') format('woff'),
+        url('../fonts/futura-demi-c/futurademic.ttf') format('truetype'),
+        url('../fonts/futura-demi-c/futurademic.svg#futurademic') format('svg');
+}
+
+* {
     box-sizing: border-box;
 }
 
-html,
 body {
     display: flex;
     justify-content: center;
     height: 100%;
-    font-family: Open Sans;
+    font-family: 'FuturaBookC';
     height: 100vh;
     background: #696969;
 }
@@ -130,4 +144,15 @@ h1 {
 }
 .signup-classic fieldset.password::after {
     content: "";
+}
+
+select[name=project_id] {
+    width: 100%;
+    height: 48px;
+    border-radius: 5px;
+    padding: 0 15px;
+}
+
+input[type=file] {
+    color: #fff;
 }

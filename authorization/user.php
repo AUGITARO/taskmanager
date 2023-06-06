@@ -6,3 +6,4 @@ if (!isset($_SESSION['user'])) {
 }
 
 $user_id = intval($_SESSION['user']['id']);
+$username = $_SESSION['user']['login'];

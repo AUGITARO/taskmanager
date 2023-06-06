@@ -137,7 +137,12 @@ function create_file(mysqli $mysqli, string $file_path, int $task_id): bool
 function search_user_tasks(mysqli $mysqli, string $query, int $user_id): array
 {   
     $query = mysqli_real_escape_string($mysqli, $query);
-    $sql = "SELECT * FROM `task` WHERE `name` LIKE '%{$query}%' AND `user_id` = {$user_id} ";
+    $sql = "
+        SELECT t.*, tf.path AS file_path
+        FROM task t
+        LEFT JOIN task_file tf ON tf.task_id = t.id
+        WHERE t.user_id = {$user_id} AND `name` LIKE '%{$query}%'
+    ";
     $result = mysqli_query($mysqli, $sql);
     $tasks = [];
 
